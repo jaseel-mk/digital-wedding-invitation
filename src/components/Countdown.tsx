@@ -16,7 +16,7 @@ function getTimeRemaining(target: number) {
 }
 
 export default function Countdown() {
-  const target = new Date(WEDDING.dateISO).getTime();
+  const target = new Date(`${WEDDING.dateISO}${WEDDING.timezoneOffset}`).getTime();
   const [time, setTime] = useState(getTimeRemaining(target));
 
   useEffect(() => {

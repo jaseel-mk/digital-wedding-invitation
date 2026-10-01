@@ -30,6 +30,7 @@ export default function Rsvp() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submittedRef.current) return;
+    if (!supabase) { setSubmitError("Online RSVP is temporarily unavailable. Please contact the couple."); return; }
     if (!validate()) return;
 
     setSubmitting(true);
@@ -147,6 +148,8 @@ export default function Rsvp() {
             />
           </div>
 
+          {!supabase && <p className="form-error" role="status">Online RSVP is temporarily unavailable. Please contact the couple.</p>}
+
           {submitError && (
             <p className="form-error" style={{ textAlign: "center", marginBottom: "12px" }}>
               {submitError}
@@ -156,7 +159,7 @@ export default function Rsvp() {
           <button
             type="submit"
             className="btn-submit"
-            disabled={submitting}
+            disabled={submitting || !supabase}
           >
             {submitting ? "Sending..." : "Send my RSVP"}
           </button>
